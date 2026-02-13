@@ -1,0 +1,1 @@
+{"model_name": "catboost_churn", "version": "v1", "roc_auc": 0.8781, "accuracy": 0.83, "threshold": 0.61, "features": ["CreditScore", "Geography", "Gender", "Age", "Balance", "NumOfProducts", "IsActiveMember"]}

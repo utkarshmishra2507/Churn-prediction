@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChurnShield | Customer Churn Predictor</title>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--glass-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 650px;
+        }
+
+        h2 {
+            color: #1f2937;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 0.9rem;
+            color: #4b5563;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input {
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        button:hover {
+            background-color: #4338ca;
+            transform: translateY(-2px);
+        }
+
+        .results {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px dashed #e5e7eb;
+            text-align: center;
+        }
+
+        .prediction-text { color: #111827; margin: 5px 0; }
+        .probability-text { color: #6b7280; font-size: 0.95rem; }
+
+        @media (max-width: 500px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Customer Churn Prediction</h2>
+
+    <form action="/predict" method="post">
+        <div class="form-grid">
+            <div class="input-group">
+                <label>Credit Score</label>
+                <input type="number" name="CreditScore" placeholder="e.g. 600" required>
+            </div>
+            <div class="input-group">
+                <label>Geography</label>
+                <input type="text" name="Geography" placeholder="France/Spain/Germany" required>
+            </div>
+            <div class="input-group">
+                <label>Gender</label>
+                <input type="text" name="Gender" placeholder="Male/Female" required>
+            </div>
+            <div class="input-group">
+                <label>Age</label>
+                <input type="number" name="Age" placeholder="Years" required>
+            </div>
+            <div class="input-group">
+                <label>Tenure</label>
+                <input type="number" name="Tenure" placeholder="Years with Bank" required>
+            </div>
+            <div class="input-group">
+                <label>Balance</label>
+                <input type="number" step="any" name="Balance" placeholder="$ Amount" required>
+            </div>
+            <div class="input-group">
+                <label>Num Of Products</label>
+                <input type="number" name="NumOfProducts" placeholder="1-4" required>
+            </div>
+            <div class="input-group">
+                <label>Has Credit Card (0/1)</label>
+                <input type="number" name="HasCrCard" min="0" max="1" required>
+            </div>
+            <div class="input-group">
+                <label>Is Active Member (0/1)</label>
+                <input type="number" name="IsActiveMember" min="0" max="1" required>
+            </div>
+            <div class="input-group">
+                <label>Estimated Salary</label>
+                <input type="number" step="any" name="EstimatedSalary" placeholder="$ Yearly" required>
+            </div>
+            
+            <div class="full-width">
+                <button type="submit">Analyze Churn Risk</button>
+            </div>
+        </div>
+    </form>
+
+    {% if prediction_text %}
+    <div class="results">
+        <h3 class="prediction-text">{{ prediction_text }}</h3>
+        <h3 class="probability-text">Probability: {{ probability }}</h3>
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
