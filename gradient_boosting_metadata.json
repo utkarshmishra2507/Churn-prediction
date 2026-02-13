@@ -1,0 +1,6 @@
+{
+    "model_name": "GradientBoostingClassifier",
+    "version": "1.0",
+    "threshold": 0.5,
+    "roc_auc": 0.8720561856155076
+}
